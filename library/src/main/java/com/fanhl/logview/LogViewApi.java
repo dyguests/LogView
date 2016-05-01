@@ -1,29 +1,19 @@
 package com.fanhl.logview;
 
 import android.app.Activity;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
-import com.fanhl.logview.ui.adapter.LogFragment;
+import com.fanhl.logview.model.LogItem;
 
 /**
  * Created by fanhl on 16/4/29.
  */
 public class LogViewApi {
 
-    private static boolean enable;
+    private static boolean enable = true;
 
     public static void bind(Activity activity) {
         if (!enable) return;
-        FrameLayout logContainer = new FrameLayout(activity);
-        logContainer.setId(2012345);
-        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        activity.addContentView(logContainer, layoutParams);
-
-        activity.getFragmentManager()
-                .beginTransaction()
-                .add(logContainer.getId(), LogFragment.newInstance(), LogFragment.TAG)
-                .commit();
+        LogViewCore.bind(activity);
     }
 
     public static void setEnable(boolean enable) {
@@ -32,7 +22,7 @@ public class LogViewApi {
 
     public static void d(String tag, String msg) {
         if (!enable) return;
-        LogViewCore.addDebugLog(tag, msg);
+        LogViewCore.addLog(new LogItem(LogItem.Type.D, tag, System.currentTimeMillis(), msg));
     }
 
 }

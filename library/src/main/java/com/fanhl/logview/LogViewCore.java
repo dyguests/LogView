@@ -1,23 +1,54 @@
 package com.fanhl.logview;
 
-import com.fanhl.logview.model.LogItem;
+import android.app.Activity;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
+import com.fanhl.logview.model.LogItem;
+import com.fanhl.logview.ui.adapter.LogFragment;
+
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
  * Created by fanhl on 16/5/1.
  */
 public class LogViewCore {
+    private static ArrayList<LogFragment> sActiveLogFragments;
+
     private final static LinkedList<LogItem> sQueue;
 
     static {
+        sActiveLogFragments = new ArrayList<>();
         sQueue = new LinkedList<>();
     }
 
-    static void addDebugLog(String tag, String msg) {
-        LogItem object = new LogItem(LogItem.Type.D, tag, System.currentTimeMillis(), msg);
+    static void bind(Activity activity) {
+        FrameLayout logContainer = new FrameLayout(activity);
+        logContainer.setId(2012345);
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        activity.addContentView(logContainer, layoutParams);
+
+        activity.getFragmentManager()
+                .beginTransaction()
+                .add(logContainer.getId(), LogFragment.newInstance(), LogFragment.TAG)
+                .commit();
+    }
+
+    static void addLog(LogItem object) {
+        int positionStart = sQueue.size();
         sQueue.add(object);
-        // FIXME: 16/5/1 notify change
+        for (LogFragment fragment : sActiveLogFragments) {
+            fragment.notifyLogInsert(positionStart);
+        }
+    }
+
+    public static void registerLogFragment(LogFragment fragment) {
+        sActiveLogFragments.add(fragment);
+    }
+
+    public static void unregisterLogFragment(LogFragment fragment) {
+        sActiveLogFragments.remove(fragment);
     }
 
     public static LinkedList<LogItem> getQueue() {

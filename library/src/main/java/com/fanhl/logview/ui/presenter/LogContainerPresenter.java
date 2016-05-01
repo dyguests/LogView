@@ -12,7 +12,6 @@ import com.fanhl.logview.model.LogItem;
 import com.fanhl.logview.ui.adapter.LogAdapter;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -51,10 +50,11 @@ public class LogContainerPresenter {
         mRecyclerView.setAdapter(mAdapter);
     }
 
+    @Deprecated
     public void refreshData() {
         List<LogItem> list = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
-            list.add(new LogItem(new Date(), "aaaaaaaaaaaaaasdfasdfaaaaaaaaaaaaaaasdfasdfaaaaaaaaaaaaaaasdfasdfaaaaaaaaaaaaaaasdfasdfaaaaaaaaaaaaaaasdfasdfaaaaaaaaaaaaaaasdfasdfaaaaaaaaaaaaaaasdfasdfaaaaaaaaaaaaaaasdfasdfaaaaaaaaaaaaaaasdfasdfa"));
+            list.add(new LogItem(LogItem.Type.D, "TAG_MOCK", System.currentTimeMillis(), "aaaaaaaaaaaaaasdfasdfaaaaaaaaaaaaaaasdfasdfaaaaaaaaaaaaaaasdfasdfaaaaaaaaaaaaaaasdfasdfaaaaaaaaaaaaaaasdfasdfaaaaaaaaaaaaaaasdfasdfaaaaaaaaaaaaaaasdfasdfaaaaaaaaaaaaaaasdfasdfaaaaaaaaaaaaaaasdfasdfa"));
         }
         mAdapter.addItems(list);
     }
@@ -65,6 +65,14 @@ public class LogContainerPresenter {
 
     private void hide() {
         mContainer.setVisibility(View.GONE);
+    }
+
+    public boolean isVisible() {
+        return mContainer.getVisibility() == View.VISIBLE;
+    }
+
+    public void notifyLogInsert(int positionStart) {
+        mAdapter.notifyItemInserted(positionStart);
     }
 
     public interface Callback {

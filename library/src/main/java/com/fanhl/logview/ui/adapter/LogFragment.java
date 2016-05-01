@@ -1,5 +1,6 @@
 package com.fanhl.logview.ui.adapter;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.fanhl.logview.LogViewCore;
 import com.fanhl.logview.R;
 import com.fanhl.logview.ui.presenter.FloatingContainerPresenter;
 import com.fanhl.logview.ui.presenter.LogContainerPresenter;
@@ -35,6 +37,18 @@ public class LogFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        LogViewCore.registerLogFragment(this);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        LogViewCore.unregisterLogFragment(this);
+    }
+
     private void assignViews(View view) {
         mFloatingContainerPresenter = new FloatingContainerPresenter(view, new FloatingContainerPresenter.Callback() {
             @Override
@@ -55,6 +69,12 @@ public class LogFragment extends Fragment {
     }
 
     private void refreshData() {
-        mLogContainerPresenter.refreshData();
+//        mLogContainerPresenter.refreshData();
+    }
+
+    public void notifyLogInsert(int positionStart) {
+//        if (mLogContainerPresenter.isVisible()) {
+            mLogContainerPresenter.notifyLogInsert(positionStart);
+//        }
     }
 }
