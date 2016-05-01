@@ -2,6 +2,9 @@
 
 A Log View in Android.to make Tester check log without Developer.
 
+<a href="./graphics/device-2016-05-01-232248.png"><img src="./graphics/device-2016-05-01-232248.png" width="40%"/></a>
+<a href="./graphics/device-2016-05-01-232215.png"><img src="./graphics/device-2016-05-01-232215.png" width="40%"/></a>
+
 #Usage
 
 1.Bind in Activity.

@@ -14,7 +14,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d(TAG, "onCreate");
+        Log.v(TAG, "onCreate");
         LogViewApi.setEnable(true);
         Log.d(TAG, "LogViewApi.setEnable(true);");
     }

@@ -1,5 +1,7 @@
 package com.fanhl.logview.model;
 
+import com.fanhl.logview.util.DateUtil;
+
 /**
  * Log bean.
  * <p/>
@@ -18,12 +20,24 @@ public class LogItem {
         this.msg = msg;
     }
 
+    public Type getType() {
+        return type;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public long getDate() {
+        return date;
+    }
+
     public String getMsg() {
         return msg;
     }
 
     public String getLog() {
-        return date + "|" + msg;// FIXME: 16/5/1
+        return DateUtil.long2mmssSSS(date) + "|" + msg;// FIXME: 16/5/1
     }
 
     public enum Type {V, D, I, W, E, A}

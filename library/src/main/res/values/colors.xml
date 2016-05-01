@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="logview_background">#b3ffffff</color>
-    <color name="logview_text_color">#000000</color>
+    <color name="logview_background">#b3000000</color>
+    <color name="logview_text_color">#ffffff</color>
+    <color name="logview_log_verbose">#BBBBBB</color>
+    <color name="logview_log_debug">#0070BB</color>
+    <color name="logview_log_info">#48BB31</color>
+    <color name="logview_log_warning">#BBBB23</color>
+    <color name="logview_log_error">#FF0006</color>
+    <color name="logview_log_assert">#8F0005</color>
 </resources>

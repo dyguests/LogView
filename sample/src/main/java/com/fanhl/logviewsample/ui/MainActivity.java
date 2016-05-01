@@ -20,13 +20,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         LogViewApi.bind(this);
-        Log.d(TAG, "onCreate");
+        Log.i(TAG, "onCreate");
 
         assignViews();
-
+        initData();
+        refreshData();
     }
 
     private void assignViews() {
+        Log.w(TAG, "assignViews");
         this.button1 = (Button) findViewById(R.id.button1);
         this.button2 = (Button) findViewById(R.id.button2);
         this.button3 = (Button) findViewById(R.id.button3);
@@ -34,20 +36,28 @@ public class MainActivity extends AppCompatActivity {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "button1 tapped!!!");
+                Log.w(TAG, "button1 tapped!!!");
             }
         });
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "button2 tapped!!!");
+                Log.e(TAG, "button2 tapped!!!");
             }
         });
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "button3 tapped!!!");
+                Log.a(TAG, "button3 tapped!!!");
             }
         });
+    }
+
+    private void initData() {
+        Log.e(TAG, "initData");
+    }
+
+    private void refreshData() {
+        Log.a(TAG, "refreshData");
     }
 }

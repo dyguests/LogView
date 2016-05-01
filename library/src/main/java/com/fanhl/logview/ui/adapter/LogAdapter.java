@@ -1,6 +1,7 @@
 package com.fanhl.logview.ui.adapter;
 
 import android.content.Context;
+import android.support.annotation.ColorRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,8 +80,25 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.ViewHolder> {
 
         public void bind(LogItem data) {
             mLog.setText(data.getLog());
+            if (data.getType() == LogItem.Type.V) {
+                mLog.setTextColor(getColor(R.color.logview_log_verbose));
+            } else if (data.getType() == LogItem.Type.D) {
+                mLog.setTextColor(getColor(R.color.logview_log_debug));
+            } else if (data.getType() == LogItem.Type.I) {
+                mLog.setTextColor(getColor(R.color.logview_log_info));
+            } else if (data.getType() == LogItem.Type.W) {
+                mLog.setTextColor(getColor(R.color.logview_log_warning));
+            } else if (data.getType() == LogItem.Type.E) {
+                mLog.setTextColor(getColor(R.color.logview_log_error));
+            } else if (data.getType() == LogItem.Type.A) {
+                mLog.setTextColor(getColor(R.color.logview_log_assert));
+            }
+            
             this.data = data;
+        }
 
+        private int getColor(@ColorRes int colorResId) {
+            return itemView.getContext().getResources().getColor(colorResId);
         }
 
         public LogItem getData() {
