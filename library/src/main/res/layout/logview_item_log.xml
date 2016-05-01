@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/log"
+        android:layout_width="match_parent"
+        android:textColor="@color/logview_text_color"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        tools:text="12:34.567|This is a log.Since it is not really clear form your question with what exactly you are having trouble I wrote up this quick walkthrough about how to implement this feature, if you still have questions feel free to ask. I "/>
+</LinearLayout>

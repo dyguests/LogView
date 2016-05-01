@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@color/logview_background"
+             android:clipChildren="false"
+             android:focusable="true"
+             android:focusableInTouchMode="true">
+
+    <FrameLayout
+        android:id="@+id/floating_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <Button
+            android:id="@+id/floating_show"
+            android:layout_width="60dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center_horizontal|top"
+            android:text="Log"/>
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/log_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/hide"
+                android:layout_width="60dp"
+                android:layout_height="35dp"
+                android:text="Hide"/>
+
+            <EditText
+                android:id="@+id/editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/filter"/>
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/logview_item_log"/>
+    </LinearLayout>
+
+</FrameLayout>
