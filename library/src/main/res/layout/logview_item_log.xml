@@ -8,7 +8,7 @@
     <TextView
         android:id="@+id/log"
         android:layout_width="match_parent"
-        android:textColor="@color/logview_text_color"
+        android:textColor="@color/logview_log_verbose"
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:maxLines="2"
