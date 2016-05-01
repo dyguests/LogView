@@ -1,4 +1,4 @@
-package com.fanhl.logview.ui.adapter;
+package com.fanhl.logview.ui.fragment;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -7,11 +7,12 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 
 import com.fanhl.logview.LogViewCore;
 import com.fanhl.logview.R;
-import com.fanhl.logview.ui.presenter.FloatingContainerPresenter;
 import com.fanhl.logview.ui.presenter.LogContainerPresenter;
+import com.fanhl.logview.ui.presenter.TogglePresenter;
 
 /**
  * A Fragment to show log.
@@ -20,8 +21,8 @@ import com.fanhl.logview.ui.presenter.LogContainerPresenter;
 public class LogFragment extends Fragment {
     public static final String TAG = LogFragment.class.getSimpleName();
 
-    private FloatingContainerPresenter mFloatingContainerPresenter;
-    private LogContainerPresenter      mLogContainerPresenter;
+    private TogglePresenter       mTogglePresenter;
+    private LogContainerPresenter mLogContainerPresenter;
 
     public static LogFragment newInstance() {
         return new LogFragment();
@@ -50,18 +51,17 @@ public class LogFragment extends Fragment {
     }
 
     private void assignViews(View view) {
-        mFloatingContainerPresenter = new FloatingContainerPresenter(view, new FloatingContainerPresenter.Callback() {
+        mTogglePresenter = new TogglePresenter(view, new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onShowClick() {
-                mLogContainerPresenter.show();
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    mLogContainerPresenter.show();
+                } else {
+                    mLogContainerPresenter.hide();
+                }
             }
         });
-        mLogContainerPresenter = new LogContainerPresenter(getActivity(), view, new LogContainerPresenter.Callback() {
-            @Override
-            public void onHideClick() {
-                mFloatingContainerPresenter.show();
-            }
-        });
+        mLogContainerPresenter = new LogContainerPresenter(getActivity(), view);
     }
 
     private void initData() {
@@ -74,7 +74,7 @@ public class LogFragment extends Fragment {
 
     public void notifyLogInsert(int positionStart) {
 //        if (mLogContainerPresenter.isVisible()) {
-            mLogContainerPresenter.notifyLogInsert(positionStart);
+        mLogContainerPresenter.notifyLogInsert(positionStart);
 //        }
     }
 }

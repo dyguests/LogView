@@ -5,7 +5,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.fanhl.logview.model.LogItem;
-import com.fanhl.logview.ui.adapter.LogFragment;
+import com.fanhl.logview.ui.fragment.LogFragment;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

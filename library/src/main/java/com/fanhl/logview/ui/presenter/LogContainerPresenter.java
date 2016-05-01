@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.fanhl.logview.R;
@@ -23,23 +22,13 @@ public class LogContainerPresenter {
 
     private final LinearLayout mContainer;
     private final RecyclerView mRecyclerView;
-    private final Button       mHide;
 
     private LogAdapter mAdapter;
 
-    public LogContainerPresenter(Context context, View view, final Callback callback) {
+    public LogContainerPresenter(Context context, View view) {
         mContext = context;
 
         mContainer = ((LinearLayout) view.findViewById(R.id.log_container));
-
-        mHide = ((Button) view.findViewById(R.id.hide));
-        mHide.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hide();
-                callback.onHideClick();
-            }
-        });
 
         mRecyclerView = ((RecyclerView) view.findViewById(R.id.recycler_view));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
@@ -63,7 +52,7 @@ public class LogContainerPresenter {
         mContainer.setVisibility(View.VISIBLE);
     }
 
-    private void hide() {
+    public void hide() {
         mContainer.setVisibility(View.GONE);
     }
 
@@ -73,9 +62,5 @@ public class LogContainerPresenter {
 
     public void notifyLogInsert(int positionStart) {
         mAdapter.notifyItemInserted(positionStart);
-    }
-
-    public interface Callback {
-        void onHideClick();
     }
 }

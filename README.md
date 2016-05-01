@@ -2,7 +2,7 @@
 
 A Log View in Android.to make Tester check log without Developer.
 
-#Useage
+#Usage
 
 1.Bind in Activity.
 

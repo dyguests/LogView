@@ -3,7 +3,6 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             android:background="@color/logview_background"
              android:clipChildren="false"
              android:focusable="true"
              android:focusableInTouchMode="true">
@@ -12,6 +11,7 @@
         android:id="@+id/log_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/logview_background"
         android:orientation="vertical"
         android:visibility="gone"
         tools:visibility="visible">
@@ -26,6 +26,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="bottom"
             android:orientation="horizontal">
 
             <LinearLayout
