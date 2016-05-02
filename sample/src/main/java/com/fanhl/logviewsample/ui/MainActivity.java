@@ -1,5 +1,6 @@
 package com.fanhl.logviewsample.ui;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -59,5 +60,19 @@ public class MainActivity extends AppCompatActivity {
 
     private void refreshData() {
         Log.a(TAG, "refreshData");
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                for (int i = 0; i < 10; i++) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    Log.d(TAG, "loop i:" + i + "/10");
+                }
+                return null;
+            }
+        }.execute();
     }
 }

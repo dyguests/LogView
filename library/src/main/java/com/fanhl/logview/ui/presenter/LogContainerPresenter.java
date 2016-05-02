@@ -73,7 +73,11 @@ public class LogContainerPresenter {
         return mContainer.getVisibility() == View.VISIBLE;
     }
 
-    public void notifyLogInsert(int positionStart) {
+    public void notifyItemInserted(int positionStart) {
         mAdapter.notifyItemInserted(positionStart);
+    }
+
+    public void notifyItemRemoved(int position) {
+        mAdapter.notifyItemRemoved(position);
     }
 }

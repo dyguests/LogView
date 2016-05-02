@@ -72,9 +72,13 @@ public class LogFragment extends Fragment {
 //        mLogContainerPresenter.refreshData();
     }
 
-    public void notifyLogInsert(int positionStart) {
+    public void notifyItemInserted(int positionStart) {
 //        if (mLogContainerPresenter.isVisible()) {
-        mLogContainerPresenter.notifyLogInsert(positionStart);
+        mLogContainerPresenter.notifyItemInserted(positionStart);
 //        }
+    }
+
+    public void notifyItemRemoved(int position) {
+        mLogContainerPresenter.notifyItemRemoved(position);
     }
 }

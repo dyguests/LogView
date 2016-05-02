@@ -14,6 +14,7 @@ import java.util.LinkedList;
  * Created by fanhl on 16/5/1.
  */
 public class LogViewCore {
+    private static final int LOG_QUEUE_MAX_SIZE = 1000;
     private static ArrayList<LogFragment> sActiveLogFragments;
 
     private final static LinkedList<LogItem> sQueue;
@@ -37,9 +38,15 @@ public class LogViewCore {
 
     static void addLog(LogItem object) {
         int positionStart = sQueue.size();
-        sQueue.add(object);
+        sQueue.offer(object);
         for (LogFragment fragment : sActiveLogFragments) {
-            fragment.notifyLogInsert(positionStart);
+            fragment.notifyItemInserted(positionStart);
+        }
+        if (sQueue.size() > LOG_QUEUE_MAX_SIZE) {
+            sQueue.poll();
+            for (LogFragment fragment : sActiveLogFragments) {
+                fragment.notifyItemRemoved(0);
+            }
         }
     }
 
