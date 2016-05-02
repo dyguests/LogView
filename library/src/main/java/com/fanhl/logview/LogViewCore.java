@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.fanhl.logview.constant.LogViewConstant;
 import com.fanhl.logview.model.LogItem;
 import com.fanhl.logview.ui.fragment.LogFragment;
 
@@ -14,7 +15,6 @@ import java.util.LinkedList;
  * Created by fanhl on 16/5/1.
  */
 public class LogViewCore {
-    private static final int LOG_QUEUE_MAX_SIZE = 1000;
     private static ArrayList<LogFragment> sActiveLogFragments;
 
     private final static LinkedList<LogItem> sQueue;
@@ -42,7 +42,7 @@ public class LogViewCore {
         for (LogFragment fragment : sActiveLogFragments) {
             fragment.notifyItemInserted(positionStart);
         }
-        if (sQueue.size() > LOG_QUEUE_MAX_SIZE) {
+        if (sQueue.size() > LogViewConstant.LOG_QUEUE_MAX_SIZE) {
             sQueue.poll();
             for (LogFragment fragment : sActiveLogFragments) {
                 fragment.notifyItemRemoved(0);

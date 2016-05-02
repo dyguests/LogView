@@ -72,13 +72,22 @@ public class LogFragment extends Fragment {
 //        mLogContainerPresenter.refreshData();
     }
 
-    public void notifyItemInserted(int positionStart) {
-//        if (mLogContainerPresenter.isVisible()) {
-        mLogContainerPresenter.notifyItemInserted(positionStart);
-//        }
+    public void notifyItemInserted(final int positionStart) {
+        // FIXME: 16/5/2 change to SurfaceView or other later.because it will spend to mush ui thread.
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mLogContainerPresenter.notifyItemInserted(positionStart);
+            }
+        });
     }
 
-    public void notifyItemRemoved(int position) {
-        mLogContainerPresenter.notifyItemRemoved(position);
+    public void notifyItemRemoved(final int position) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mLogContainerPresenter.notifyItemRemoved(position);
+            }
+        });
     }
 }
