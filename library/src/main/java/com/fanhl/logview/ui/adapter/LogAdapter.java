@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.fanhl.logview.LogViewCore;
 import com.fanhl.logview.R;
 import com.fanhl.logview.model.LogItem;
+import com.fanhl.logview.ui.base.ClickableRecyclerViewAdapter;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -20,14 +21,16 @@ import java.util.List;
  * <p/>
  * Created by fanhl on 16/4/29.
  */
-public class LogAdapter extends RecyclerView.Adapter<LogAdapter.ViewHolder> {
+public class LogAdapter extends ClickableRecyclerViewAdapter<LogAdapter.ViewHolder> {
 
-    private final Context             context;
-    private final LinkedList<LogItem> list;
+    /**
+     * Use queue;so it has max size.
+     */
+    private final LinkedList<LogItem> queue;
 
-    public LogAdapter(Context context) {
-        this.context = context;
-        list = LogViewCore.getQueue();
+    public LogAdapter(Context context, RecyclerView recyclerView) {
+        super(context, recyclerView);
+        queue = LogViewCore.getQueue();
     }
 
     @Override
@@ -37,37 +40,38 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.bind(list.get(position));
+        super.onBindViewHolder(holder, position);
+        holder.bind(queue.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return queue.size();
     }
 
     //-----------------------数据增删相关-------------------------------
     @Deprecated
     public void AddItem(LogItem item) {
-        int position = list.size();
-        list.add(item);
+        int position = queue.size();
+        queue.add(item);
         notifyItemInserted(position);
     }
 
     @Deprecated
     public void addItems(List<LogItem> items) {
         int positionStart = items.size();
-        list.addAll(items);
+        queue.addAll(items);
         notifyItemRangeInserted(positionStart, items.size());
     }
 
     @Deprecated
     public void clear() {
-        int itemCount = list.size();
-        list.clear();
+        int itemCount = queue.size();
+        queue.clear();
         notifyItemRangeRemoved(0, itemCount);
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends ClickableRecyclerViewAdapter.ClickableViewHolder {
 
         private final TextView mLog;
 
@@ -93,7 +97,7 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.ViewHolder> {
             } else if (data.getType() == LogItem.Type.A) {
                 mLog.setTextColor(getColor(R.color.logview_log_assert));
             }
-            
+
             this.data = data;
         }
 

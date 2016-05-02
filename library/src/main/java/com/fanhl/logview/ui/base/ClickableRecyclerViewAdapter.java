@@ -43,11 +43,11 @@ public abstract class ClickableRecyclerViewAdapter<CVH extends ClickableRecycler
     }
 
     public interface OnItemClickListener {
-        void onItemClick(int position, ClickableViewHolder holder);
+        void onItemClick(int position, ClickableRecyclerViewAdapter.ClickableViewHolder holder);
     }
 
     public interface OnItemLongClickListener {
-        boolean onItemLongClick(int position, ClickableViewHolder holder);
+        boolean onItemLongClick(int position, ClickableRecyclerViewAdapter.ClickableViewHolder holder);
     }
 
     private OnItemClickListener     itemClickListener;
@@ -79,7 +79,7 @@ public abstract class ClickableRecyclerViewAdapter<CVH extends ClickableRecycler
         });
     }
 
-    public static class ClickableViewHolder extends RecyclerView.ViewHolder {
+    public class ClickableViewHolder extends RecyclerView.ViewHolder {
         public ClickableViewHolder(View itemView) {
             super(itemView);
         }

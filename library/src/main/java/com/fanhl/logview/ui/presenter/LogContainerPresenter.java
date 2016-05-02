@@ -9,6 +9,8 @@ import android.widget.LinearLayout;
 import com.fanhl.logview.R;
 import com.fanhl.logview.model.LogItem;
 import com.fanhl.logview.ui.adapter.LogAdapter;
+import com.fanhl.logview.ui.base.ClickableRecyclerViewAdapter;
+import com.fanhl.logview.util.SystemUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,8 +37,19 @@ public class LogContainerPresenter {
     }
 
     public void initData() {
-        mAdapter = new LogAdapter(mContext);
+        mAdapter = new LogAdapter(mContext, mRecyclerView);
         mRecyclerView.setAdapter(mAdapter);
+
+        mAdapter.setOnItemClickListener(new ClickableRecyclerViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position, ClickableRecyclerViewAdapter.ClickableViewHolder holder) {
+                //copy log to clipboard.
+                LogItem data = ((LogAdapter.ViewHolder) holder).getData();
+                if (data != null) SystemUtil.copyToClipboard(mContext, data.getLog());
+
+                // FIXME: 16/5/2 show detail.
+            }
+        });
     }
 
     @Deprecated
