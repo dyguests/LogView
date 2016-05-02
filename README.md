@@ -6,12 +6,20 @@ A Log View in Android.to make Tester check log without Developer.
 <a href="./graphics/device-2016-05-01-232215.png"><img src="./graphics/device-2016-05-01-232215.png" width="40%"/></a>
 
 # TODO
+
 1.scroll bar.
+
 2.filter.
+
 3.surfaceView or TextureView.
+
 4.pined bottom.
+
 5.change recyclerView to listView.
+
 6.list divider.
+
+7.custom logView(color,filter,etc.)
 
 #Usage
 
@@ -45,7 +53,7 @@ public class Log {
 
 3.Have fun.
 
-#Proguand
+# Proguard
 
 ```proguard
 -keepclassmembers class com.fanhl.logview.LogViewApi {
@@ -53,7 +61,7 @@ public class Log {
 }
 ```
 
-#Lincese
+# License
 
 Copyright 2016 dyguests
 
