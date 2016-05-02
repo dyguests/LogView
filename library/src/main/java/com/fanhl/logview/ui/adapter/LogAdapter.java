@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.fanhl.logview.LogViewCore;
 import com.fanhl.logview.R;
 import com.fanhl.logview.model.LogItem;
+import com.fanhl.logview.model.LogLevel;
 import com.fanhl.logview.ui.base.ClickableRecyclerViewAdapter;
 
 import java.util.LinkedList;
@@ -84,17 +85,17 @@ public class LogAdapter extends ClickableRecyclerViewAdapter<LogAdapter.ViewHold
 
         public void bind(LogItem data) {
             mLog.setText(data.getLog());
-            if (data.getType() == LogItem.Type.V) {
+            if (data.getLevel() == LogLevel.V) {
                 mLog.setTextColor(getColor(R.color.logview_log_verbose));
-            } else if (data.getType() == LogItem.Type.D) {
+            } else if (data.getLevel() == LogLevel.D) {
                 mLog.setTextColor(getColor(R.color.logview_log_debug));
-            } else if (data.getType() == LogItem.Type.I) {
+            } else if (data.getLevel() == LogLevel.I) {
                 mLog.setTextColor(getColor(R.color.logview_log_info));
-            } else if (data.getType() == LogItem.Type.W) {
+            } else if (data.getLevel() == LogLevel.W) {
                 mLog.setTextColor(getColor(R.color.logview_log_warning));
-            } else if (data.getType() == LogItem.Type.E) {
+            } else if (data.getLevel() == LogLevel.E) {
                 mLog.setTextColor(getColor(R.color.logview_log_error));
-            } else if (data.getType() == LogItem.Type.A) {
+            } else if (data.getLevel() == LogLevel.A) {
                 mLog.setTextColor(getColor(R.color.logview_log_assert));
             }
 

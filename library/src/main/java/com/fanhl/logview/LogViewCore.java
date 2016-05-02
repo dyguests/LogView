@@ -6,6 +6,7 @@ import android.widget.FrameLayout;
 
 import com.fanhl.logview.constant.LogViewConstant;
 import com.fanhl.logview.model.LogItem;
+import com.fanhl.logview.model.LogLevel;
 import com.fanhl.logview.ui.fragment.LogFragment;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class LogViewCore {
     private static ArrayList<LogFragment> sActiveLogFragments;
 
     private final static LinkedList<LogItem> sQueue;
+    private static LogLevel sLevel = LogLevel.V;
 
     static {
         sActiveLogFragments = new ArrayList<>();
@@ -56,6 +58,10 @@ public class LogViewCore {
 
     public static void unregisterLogFragment(LogFragment fragment) {
         sActiveLogFragments.remove(fragment);
+    }
+
+    public static void setLogLevel(LogLevel level) {
+        LogViewCore.sLevel = level;
     }
 
     public static LinkedList<LogItem> getQueue() {

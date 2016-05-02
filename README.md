@@ -1,4 +1,4 @@
-#LogView
+# LogView Ver.0.0.1
 
 A Log View in Android.to make Tester check log without Developer.
 
