@@ -90,4 +90,13 @@ public class LogFragment extends Fragment {
             }
         });
     }
+
+    public void notifyPinBottom() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mLogContainerPresenter.notifyPinBottom();
+            }
+        });
+    }
 }

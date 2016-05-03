@@ -15,7 +15,7 @@ public class TogglePresenter {
     private final ToggleButton mToggle;
 
     public TogglePresenter(View view, CompoundButton.OnCheckedChangeListener onCheckedChangeListener) {
-        mToggle = ((ToggleButton) view.findViewById(R.id.toggle));
+        mToggle = ((ToggleButton) view.findViewById(R.id.log_toggle));
         mToggle.setOnCheckedChangeListener(onCheckedChangeListener);
     }
 }

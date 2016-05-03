@@ -37,8 +37,18 @@
 
                 <Spinner
                     android:id="@+id/type_spinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+
+                <ToggleButton
+                    android:id="@+id/pin_toggle"
+                    android:layout_width="48dp"
+                    android:layout_height="match_parent"
+                    android:checked="true"
+                    android:padding="0dp"
+                    android:textOff="Pin"
+                    android:textOn="Pin"/>
             </LinearLayout>
 
             <!--toggle place holder-->
@@ -64,9 +74,11 @@
     </LinearLayout>
 
     <ToggleButton
-        android:id="@+id/toggle"
+        android:id="@+id/log_toggle"
         android:layout_width="48dp"
         android:layout_height="36dp"
         android:layout_gravity="center_horizontal|bottom"
-        android:padding="0dp"/>
+        android:padding="0dp"
+        android:textOff="Log"
+        android:textOn="Log"/>
 </FrameLayout>

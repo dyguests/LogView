@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.ToggleButton;
 
 import com.fanhl.logview.LogViewCore;
 import com.fanhl.logview.R;
@@ -31,6 +32,7 @@ public class LogContainerPresenter {
     private final LinearLayout mContainer;
     private final RecyclerView mRecyclerView;
     private final Spinner      mTypeSpinner;
+    private final ToggleButton mPinToggle;
 
     private LogAdapter           mLogAdapter;
     private ArrayAdapter<String> mTypeAdapter;
@@ -44,6 +46,7 @@ public class LogContainerPresenter {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
 
         mTypeSpinner = ((Spinner) view.findViewById(R.id.type_spinner));
+        mPinToggle = ((ToggleButton) view.findViewById(R.id.pin_toggle));
     }
 
     public void initData() {
@@ -102,5 +105,11 @@ public class LogContainerPresenter {
 
     public void notifyItemRangeRemoved(int positionStart, int itemCount) {
         mLogAdapter.notifyItemRangeRemoved(positionStart, itemCount);
+    }
+
+    public void notifyPinBottom() {
+        if (mPinToggle.isChecked()) {
+            mRecyclerView.scrollToPosition(mLogAdapter.getItemCount() - 1);
+        }
     }
 }

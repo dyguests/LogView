@@ -53,7 +53,11 @@ public class LogViewCore {
             }
             for (LogFragment fragment : sActiveLogFragments) {
                 fragment.notifyItemRangeRemoved(0, overflowCount);
+//                fragment.sc
             }
+        }
+        for (LogFragment fragment : sActiveLogFragments) {
+            fragment.notifyPinBottom();
         }
     }
 
