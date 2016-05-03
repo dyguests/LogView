@@ -18,7 +18,6 @@ import com.fanhl.logview.ui.base.ClickableRecyclerViewAdapter;
 import com.fanhl.logview.util.SystemUtil;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -101,7 +100,7 @@ public class LogContainerPresenter {
         mLogAdapter.notifyItemInserted(positionStart);
     }
 
-    public void notifyItemRemoved(int position) {
-        mLogAdapter.notifyItemRemoved(position);
+    public void notifyItemRangeRemoved(int positionStart, int itemCount) {
+        mLogAdapter.notifyItemRangeRemoved(positionStart, itemCount);
     }
 }

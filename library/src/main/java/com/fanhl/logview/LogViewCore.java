@@ -38,16 +38,19 @@ public class LogViewCore {
                 .commit();
     }
 
-    static void addLog(LogItem object) {
+    static synchronized void addLog(LogItem object) {
         int positionStart = sQueue.size();
         sQueue.offer(object);
         for (LogFragment fragment : sActiveLogFragments) {
             fragment.notifyItemInserted(positionStart);
         }
-        if (sQueue.size() > LogViewConstant.LOG_QUEUE_MAX_SIZE) {
-            sQueue.poll();
+        int overflowCount = sQueue.size() - LogViewConstant.LOG_QUEUE_MAX_SIZE;
+        if (overflowCount > 0) {
+            for (int i = 0; i < overflowCount; i++) {
+                sQueue.poll();
+            }
             for (LogFragment fragment : sActiveLogFragments) {
-                fragment.notifyItemRemoved(0);
+                fragment.notifyItemRangeRemoved(0, overflowCount);
             }
         }
     }

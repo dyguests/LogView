@@ -82,11 +82,11 @@ public class LogFragment extends Fragment {
         });
     }
 
-    public void notifyItemRemoved(final int position) {
+    public void notifyItemRangeRemoved(final int position, final int itemCount) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mLogContainerPresenter.notifyItemRemoved(position);
+                mLogContainerPresenter.notifyItemRangeRemoved(position, itemCount);
             }
         });
     }
