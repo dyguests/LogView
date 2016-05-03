@@ -28,10 +28,12 @@ public class LogAdapter extends ClickableRecyclerViewAdapter<LogAdapter.ViewHold
      * Use queue;so it has max size.
      */
     private final LinkedList<LogItem> queue;
+    private final LinkedList<LogItem> filteredQueue;
 
     public LogAdapter(Context context, RecyclerView recyclerView) {
         super(context, recyclerView);
         queue = LogViewCore.getQueue();
+        filteredQueue = LogViewCore.getFilteredQueue();
     }
 
     @Override

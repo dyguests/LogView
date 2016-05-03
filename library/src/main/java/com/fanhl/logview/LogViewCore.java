@@ -16,14 +16,16 @@ import java.util.LinkedList;
  * Created by fanhl on 16/5/1.
  */
 public class LogViewCore {
-    private static ArrayList<LogFragment> sActiveLogFragments;
+    private final static ArrayList<LogFragment> sActiveLogFragments;
+    private final static LinkedList<LogItem>    sQueue;
+    private final static LinkedList<LogItem>    sFilteredQueue;
 
-    private final static LinkedList<LogItem> sQueue;
     private static LogLevel sLevel = LogLevel.V;
 
     static {
         sActiveLogFragments = new ArrayList<>();
         sQueue = new LinkedList<>();
+        sFilteredQueue = new LinkedList<>();
     }
 
     static void bind(Activity activity) {
@@ -69,5 +71,9 @@ public class LogViewCore {
 
     public static LinkedList<LogItem> getQueue() {
         return sQueue;
+    }
+
+    public static LinkedList<LogItem> getFilteredQueue() {
+        return sFilteredQueue;
     }
 }
