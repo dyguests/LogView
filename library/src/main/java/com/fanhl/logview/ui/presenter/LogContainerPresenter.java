@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
-import com.fanhl.logview.LogViewCore;
+import com.fanhl.logview.LogViewCoreOld;
 import com.fanhl.logview.R;
 import com.fanhl.logview.model.LogItem;
 import com.fanhl.logview.model.LogLevel;
@@ -69,7 +69,7 @@ public class LogContainerPresenter {
         mTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                LogViewCore.setLogLevel(LogLevel.values()[position]);
+                LogViewCoreOld.setLogLevel(LogLevel.values()[position]);
             }
 
             @Override

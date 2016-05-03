@@ -15,7 +15,7 @@ import java.util.LinkedList;
 /**
  * Created by fanhl on 16/5/1.
  */
-public class LogViewCore {
+public class LogViewCoreOld {
     private final static ArrayList<LogFragment> sActiveLogFragments;
     private final static LinkedList<LogItem>    sQueue;
     private final static LinkedList<LogItem>    sFilteredQueue;
@@ -66,7 +66,7 @@ public class LogViewCore {
     }
 
     public static void setLogLevel(LogLevel level) {
-        LogViewCore.sLevel = level;
+        LogViewCoreOld.sLevel = level;
     }
 
     public static LinkedList<LogItem> getQueue() {

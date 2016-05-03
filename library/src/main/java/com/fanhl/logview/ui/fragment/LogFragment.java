@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
-import com.fanhl.logview.LogViewCore;
+import com.fanhl.logview.LogViewCoreOld;
 import com.fanhl.logview.R;
 import com.fanhl.logview.ui.presenter.LogContainerPresenter;
 import com.fanhl.logview.ui.presenter.TogglePresenter;
@@ -41,13 +41,13 @@ public class LogFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        LogViewCore.registerLogFragment(this);
+        LogViewCoreOld.registerLogFragment(this);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        LogViewCore.unregisterLogFragment(this);
+        LogViewCoreOld.unregisterLogFragment(this);
     }
 
     private void assignViews(View view) {

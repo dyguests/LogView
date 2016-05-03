@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.fanhl.logview.LogViewCore;
+import com.fanhl.logview.LogViewCoreOld;
 import com.fanhl.logview.R;
 import com.fanhl.logview.model.LogItem;
 import com.fanhl.logview.model.LogLevel;
@@ -32,8 +32,8 @@ public class LogAdapter extends ClickableRecyclerViewAdapter<LogAdapter.ViewHold
 
     public LogAdapter(Context context, RecyclerView recyclerView) {
         super(context, recyclerView);
-        queue = LogViewCore.getQueue();
-        filteredQueue = LogViewCore.getFilteredQueue();
+        queue = LogViewCoreOld.getQueue();
+        filteredQueue = LogViewCoreOld.getFilteredQueue();
     }
 
     @Override
