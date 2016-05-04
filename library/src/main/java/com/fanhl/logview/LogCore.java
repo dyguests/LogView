@@ -9,13 +9,14 @@ import com.fanhl.logview.util.StringUtil;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Observable;
 
 /**
  * The core of log.Just logic.No relationship of ui.
  * <p/>
  * Created by fanhl on 16/5/3.
  */
-public class LogCore {
+public class LogCore extends Observable {
     private static final int STABILIZER_TIME = 100;
     private static final int LIMIT_LENGTH    = 100;
 
