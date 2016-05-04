@@ -25,6 +25,8 @@ public class LogCore {
     private static final List<LogItem> bufferFullLogs;
     private static final List<LogItem> bufferFilterdLogs;
 
+    private static ListUtil.Filter<LogItem> logItemFilter;
+
     private static LogFilterCondition logFilterCondition;
 
     static {
@@ -34,9 +36,15 @@ public class LogCore {
         filterdLogs = Collections.synchronizedList(new LinkedList<LogItem>());
         bufferFullLogs = Collections.synchronizedList(new LinkedList<LogItem>());
         bufferFilterdLogs = Collections.synchronizedList(new LinkedList<LogItem>());
+
+        logItemFilter = new ListUtil.Filter<LogItem>() {
+            @Override public boolean filter(LogItem logItem) {
+                return logItem.getLogLevel().getIndex() >= logFilterCondition.getLogLevel().getIndex();
+            }
+        };
     }
 
-    public void addLog(LogItem logItem) {
+    public static void addLog(LogItem logItem) {
         //add buffer log
         bufferFullLogs.add(logItem);
         synchronized (bufferFullLogs) {
@@ -52,11 +60,7 @@ public class LogCore {
         synchronized (bufferFullLogs) {
             fullLogs.addAll(bufferFullLogs);
 
-            ListUtil.filter(bufferFullLogs, bufferFilterdLogs, new ListUtil.Filter<LogItem>() {
-                @Override public boolean filter(LogItem logItem) {
-                    return logItem.getLogLevel().getIndex() >= logFilterCondition.getLogLevel().getIndex();
-                }
-            });
+            ListUtil.filter(bufferFullLogs, bufferFilterdLogs, logItemFilter);
             filterdLogs.addAll(bufferFilterdLogs);
 
             bufferFullLogs.clear();
@@ -75,6 +79,9 @@ public class LogCore {
     }
 
     public void onLogFilterConditionChanged() {
-
+        synchronized (fullLogs) {
+            filterdLogs.clear();
+            ListUtil.filter(fullLogs, filterdLogs, logItemFilter);
+        }
     }
 }
