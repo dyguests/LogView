@@ -15,14 +15,7 @@ public class Stabilizer {
      */
     long stabilizerTime = STABILIZER_TIME_DEFAULT;
 
-    long lastTime;
-
-    public Stabilizer() {
-    }
-
-    public Stabilizer(long stabilizerTime) {
-        this.stabilizerTime = stabilizerTime;
-    }
+    long lastTime = 0;
 
     /**
      * 是否可以使用（已超过防抖时间）
