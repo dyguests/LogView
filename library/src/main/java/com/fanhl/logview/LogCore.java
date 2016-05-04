@@ -4,6 +4,7 @@ import com.fanhl.logview.model.LogFilterCondition;
 import com.fanhl.logview.model.LogItem;
 import com.fanhl.logview.util.ListUtil;
 import com.fanhl.logview.util.Stabilizer;
+import com.fanhl.logview.util.StringUtil;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -21,11 +22,11 @@ public class LogCore {
     private static final Stabilizer stabilizer;
 
     private static final List<LogItem> fullLogs;
-    private static final List<LogItem> filterdLogs;
+    private static final List<LogItem> filteredLogs;
     private static final List<LogItem> bufferFullLogs;
     private static final List<LogItem> bufferFilterdLogs;
 
-    private static ListUtil.Filter<LogItem> logItemFilter;
+    private static final ListUtil.Filter<LogItem> logItemFilter;
 
     private static LogFilterCondition logFilterCondition;
 
@@ -33,7 +34,7 @@ public class LogCore {
         stabilizer = new Stabilizer(STABILIZER_TIME);
 
         fullLogs = Collections.synchronizedList(new LinkedList<LogItem>());
-        filterdLogs = Collections.synchronizedList(new LinkedList<LogItem>());
+        filteredLogs = Collections.synchronizedList(new LinkedList<LogItem>());
         bufferFullLogs = Collections.synchronizedList(new LinkedList<LogItem>());
         bufferFilterdLogs = Collections.synchronizedList(new LinkedList<LogItem>());
 
@@ -61,7 +62,7 @@ public class LogCore {
             fullLogs.addAll(bufferFullLogs);
 
             ListUtil.filter(bufferFullLogs, bufferFilterdLogs, logItemFilter);
-            filterdLogs.addAll(bufferFilterdLogs);
+            filteredLogs.addAll(bufferFilterdLogs);
 
             bufferFullLogs.clear();
             bufferFilterdLogs.clear();
@@ -72,16 +73,26 @@ public class LogCore {
             if (overflowCount > 0) fullLogs.removeAll(fullLogs.subList(0, overflowCount));
         }
 
-        synchronized (filterdLogs) {
-            int overflowCount = filterdLogs.size() - LIMIT_LENGTH;
-            if (overflowCount > 0) filterdLogs.removeAll(filterdLogs.subList(0, overflowCount));
+        synchronized (filteredLogs) {
+            int overflowCount = filteredLogs.size() - LIMIT_LENGTH;
+            if (overflowCount > 0) filteredLogs.removeAll(filteredLogs.subList(0, overflowCount));
         }
     }
 
-    public void onLogFilterConditionChanged() {
+    public static void setLogFilterCondition(LogFilterCondition logFilterCondition) {
+        //if same
+        if (LogCore.logFilterCondition.getLogLevel() == logFilterCondition.getLogLevel() &&
+                StringUtil.equals(LogCore.logFilterCondition.getQuery(), logFilterCondition.getQuery())) {
+            return;
+        }
+        LogCore.logFilterCondition = logFilterCondition;
+        onLogFilterConditionChanged();
+    }
+
+    public static void onLogFilterConditionChanged() {
         synchronized (fullLogs) {
-            filterdLogs.clear();
-            ListUtil.filter(fullLogs, filterdLogs, logItemFilter);
+            filteredLogs.clear();
+            ListUtil.filter(fullLogs, filteredLogs, logItemFilter);
         }
     }
 }
