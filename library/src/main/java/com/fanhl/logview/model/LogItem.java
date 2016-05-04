@@ -10,10 +10,10 @@ public class LogItem {
     private String   message;
 
     public LogItem() {
-        this(LogLevel.V, System.currentTimeMillis(), null, null);
+        this(System.currentTimeMillis(), LogLevel.V, null, null);
     }
 
-    public LogItem(LogLevel logLevel, long time, String tag, String message) {
+    public LogItem(long time, LogLevel logLevel, String tag, String message) {
         this.logLevel = logLevel;
         this.time = time;
         this.tag = tag;
