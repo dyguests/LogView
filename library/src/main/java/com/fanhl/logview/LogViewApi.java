@@ -16,7 +16,7 @@ public class LogViewApi {
 
     public static void bind(Activity activity) {
         if (!enable) return;
-//        LogCore.bind(activity);
+        LogViewUI.bind(activity);
     }
 
     public static void setEnable(boolean enable) {
