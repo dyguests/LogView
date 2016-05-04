@@ -17,6 +17,12 @@ public class Stabilizer {
 
     long lastTime = 0;
 
+    public Stabilizer() {}
+
+    public Stabilizer(int milliseconds) {
+        stabilizerTime = milliseconds;
+    }
+
     /**
      * 是否可以使用（已超过防抖时间）
      */

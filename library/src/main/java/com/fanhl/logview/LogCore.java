@@ -1,7 +1,8 @@
 package com.fanhl.logview;
 
-import com.fanhl.logview.model.LogFilter;
+import com.fanhl.logview.model.LogFilterCondition;
 import com.fanhl.logview.model.LogItem;
+import com.fanhl.logview.util.ListUtil;
 import com.fanhl.logview.util.Stabilizer;
 
 import java.util.Collections;
@@ -14,38 +15,66 @@ import java.util.List;
  * Created by fanhl on 16/5/3.
  */
 public class LogCore {
-    private static final int LIMIT_LENGTH = 100;
+    private static final int STABILIZER_TIME = 100;
+    private static final int LIMIT_LENGTH    = 100;
 
     private static final Stabilizer stabilizer;
 
     private static final List<LogItem> fullLogs;
     private static final List<LogItem> filterdLogs;
-    private static final List<LogItem> bufferLogs;
+    private static final List<LogItem> bufferFullLogs;
+    private static final List<LogItem> bufferFilterdLogs;
 
-    private static LogFilter logFilter;
+    private static LogFilterCondition logFilterCondition;
 
     static {
-        stabilizer = new Stabilizer();
+        stabilizer = new Stabilizer(STABILIZER_TIME);
 
         fullLogs = Collections.synchronizedList(new LinkedList<LogItem>());
         filterdLogs = Collections.synchronizedList(new LinkedList<LogItem>());
-        bufferLogs = Collections.synchronizedList(new LinkedList<LogItem>());
-
-        logFilter = new LogFilter();
+        bufferFullLogs = Collections.synchronizedList(new LinkedList<LogItem>());
+        bufferFilterdLogs = Collections.synchronizedList(new LinkedList<LogItem>());
     }
 
     public void addLog(LogItem logItem) {
-        addBufferLog(logItem);
+        //add buffer log
+        bufferFullLogs.add(logItem);
+        synchronized (bufferFullLogs) {
+            int overflowCount = bufferFullLogs.size() - LIMIT_LENGTH;
+            if (overflowCount > 0) bufferFullLogs.removeAll(bufferFullLogs.subList(0, overflowCount));
+        }
 
+        //refresh log ui per 100 milliseconds
         if (!stabilizer.check()) return;
         stabilizer.actived();
 
+        //add log from butter log
+        synchronized (bufferFullLogs) {
+            fullLogs.addAll(bufferFullLogs);
 
+            ListUtil.filter(bufferFullLogs, bufferFilterdLogs, new ListUtil.Filter<LogItem>() {
+                @Override public boolean filter(LogItem logItem) {
+                    return logItem.getLogLevel().getIndex() >= logFilterCondition.getLogLevel().getIndex();
+                }
+            });
+            filterdLogs.addAll(bufferFilterdLogs);
+
+            bufferFullLogs.clear();
+            bufferFilterdLogs.clear();
+        }
+
+        synchronized (fullLogs) {
+            int overflowCount = fullLogs.size() - LIMIT_LENGTH;
+            if (overflowCount > 0) fullLogs.removeAll(fullLogs.subList(0, overflowCount));
+        }
+
+        synchronized (filterdLogs) {
+            int overflowCount = filterdLogs.size() - LIMIT_LENGTH;
+            if (overflowCount > 0) filterdLogs.removeAll(filterdLogs.subList(0, overflowCount));
+        }
     }
 
-    private void addBufferLog(LogItem logItem) {
-        bufferLogs.add(logItem);
-        int overflowCount = bufferLogs.size() - LIMIT_LENGTH;
-        if (overflowCount > 0) bufferLogs.removeAll(bufferLogs.subList(0, overflowCount));
+    public void onLogFilterConditionChanged() {
+
     }
 }
