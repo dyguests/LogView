@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.fanhl.logview.ui.fragment.LogFragment;
+
 /**
  * UI
  * <p/>
@@ -17,5 +19,13 @@ public class LogViewUI {
     public static void bind(Activity activity) {
         View view = LayoutInflater.from(activity).inflate(R.layout.logview_container, null);
         activity.addContentView(view, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+    }
+
+    public static void registerLogFragment(LogFragment logFragment) {
+
+    }
+
+    public static void unregisterLogFragment(LogFragment logFragment) {
+
     }
 }

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.fanhl.logview.LogViewUI;
 import com.fanhl.logview.R;
 
 /**
@@ -27,13 +28,13 @@ public class LogFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        LogViewCore.registerLogFragment(this);
+        LogViewUI.registerLogFragment(this);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        LogViewCore.unregisterLogFragment(this);
+        LogViewUI.unregisterLogFragment(this);
     }
 
     private void assignViews(View view) {
