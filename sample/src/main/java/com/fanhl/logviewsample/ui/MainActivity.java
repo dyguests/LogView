@@ -8,9 +8,10 @@ import android.widget.Button;
 
 import com.fanhl.logview.LogViewApi;
 import com.fanhl.logviewsample.R;
+import com.fanhl.logviewsample.ui.base.BaseActivity;
 import com.fanhl.logviewsample.util.Log;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     public static final String TAG = MainActivity.class.getSimpleName();
     private android.widget.Button button1;
     private android.widget.Button button2;
@@ -20,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        LogViewApi.bind(this);
         Log.i(TAG, "onCreate");
 
         assignViews();

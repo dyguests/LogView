@@ -6,9 +6,7 @@ import com.fanhl.logview.util.ListUtil;
 import com.fanhl.logview.util.Stabilizer;
 import com.fanhl.logview.util.StringUtil;
 
-import java.util.Collections;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Observable;
 
 /**
@@ -22,10 +20,10 @@ public class LogCore extends Observable {
 
     private static final Stabilizer stabilizer;
 
-    private static final List<LogItem> fullLogs;
-    private static final List<LogItem> filteredLogs;
-    private static final List<LogItem> bufferFullLogs;
-    private static final List<LogItem> bufferFilterdLogs;
+    private static final LinkedList<LogItem> fullLogs;
+    private static final LinkedList<LogItem> filteredLogs;
+    private static final LinkedList<LogItem> bufferFullLogs;
+    private static final LinkedList<LogItem> bufferFilterdLogs;
 
     private static final ListUtil.Filter<LogItem> logItemFilter;
 
@@ -34,32 +32,36 @@ public class LogCore extends Observable {
     static {
         stabilizer = new Stabilizer(STABILIZER_TIME);
 
-        fullLogs = Collections.synchronizedList(new LinkedList<LogItem>());
-        filteredLogs = Collections.synchronizedList(new LinkedList<LogItem>());
-        bufferFullLogs = Collections.synchronizedList(new LinkedList<LogItem>());
-        bufferFilterdLogs = Collections.synchronizedList(new LinkedList<LogItem>());
+        fullLogs = new LinkedList<LogItem>();// Collections.synchronizedList(new LinkedList<LogItem>());
+        filteredLogs = new LinkedList<LogItem>();// Collections.synchronizedList(new LinkedList<LogItem>());
+        bufferFullLogs = new LinkedList<LogItem>();//Collections.synchronizedList(new LinkedList<LogItem>());
+        bufferFilterdLogs = new LinkedList<LogItem>();//Collections.synchronizedList(new LinkedList<LogItem>());
 
         logItemFilter = new ListUtil.Filter<LogItem>() {
             @Override public boolean filter(LogItem logItem) {
-                return logItem.getLogLevel().getIndex() >= logFilterCondition.getLogLevel().getIndex();
+                return logFilterCondition == null || logItem.getLogLevel().getIndex() >= logFilterCondition.getLogLevel().getIndex();
             }
         };
     }
 
+    /**
+     * fixme synchronized logic
+     *
+     * @param logItem
+     */
     public static void addLog(LogItem logItem) {
-        //add buffer log
-        bufferFullLogs.add(logItem);
-        synchronized (bufferFullLogs) {
-            int overflowCount = bufferFullLogs.size() - LIMIT_LENGTH;
-            if (overflowCount > 0) bufferFullLogs.removeAll(bufferFullLogs.subList(0, overflowCount));
-        }
+        synchronized (LogCore.class) {
+            //add buffer log
+            bufferFullLogs.add(logItem);
+            while (bufferFullLogs.size() > LIMIT_LENGTH) bufferFullLogs.poll();
 
-        //refresh log ui per 100 milliseconds
-        if (!stabilizer.check()) return;
-        stabilizer.actived();
 
-        //add log from butter log
-        synchronized (bufferFullLogs) {
+            //refresh log ui per 100 milliseconds
+            if (!stabilizer.check()) return;
+            stabilizer.actived();
+
+
+            //add log from butter log
             fullLogs.addAll(bufferFullLogs);
 
             ListUtil.filter(bufferFullLogs, bufferFilterdLogs, logItemFilter);
@@ -67,16 +69,9 @@ public class LogCore extends Observable {
 
             bufferFullLogs.clear();
             bufferFilterdLogs.clear();
-        }
-
-        synchronized (fullLogs) {
-            int overflowCount = fullLogs.size() - LIMIT_LENGTH;
-            if (overflowCount > 0) fullLogs.removeAll(fullLogs.subList(0, overflowCount));
-        }
-
-        synchronized (filteredLogs) {
-            int overflowCount = filteredLogs.size() - LIMIT_LENGTH;
-            if (overflowCount > 0) filteredLogs.removeAll(filteredLogs.subList(0, overflowCount));
+            
+            while (fullLogs.size() > LIMIT_LENGTH) fullLogs.poll();
+            while (filteredLogs.size() > LIMIT_LENGTH) filteredLogs.poll();
         }
     }
 
@@ -91,7 +86,7 @@ public class LogCore extends Observable {
     }
 
     public static void onLogFilterConditionChanged() {
-        synchronized (fullLogs) {
+        synchronized (LogCore.class) {
             filteredLogs.clear();
             ListUtil.filter(fullLogs, filteredLogs, logItemFilter);
         }
