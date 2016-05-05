@@ -2,11 +2,9 @@ package com.fanhl.logviewsample.ui;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import com.fanhl.logview.LogViewApi;
 import com.fanhl.logviewsample.R;
 import com.fanhl.logviewsample.ui.base.BaseActivity;
 import com.fanhl.logviewsample.util.Log;
@@ -69,7 +67,7 @@ public class MainActivity extends BaseActivity {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    Log.d(TAG, "loop i:" + i + "/10");
+                    Log.d(TAG, "loop i:" + i + "/100");
                 }
                 return null;
             }
