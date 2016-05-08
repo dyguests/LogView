@@ -4,18 +4,15 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.Spinner;
-import android.widget.ToggleButton;
 
 import com.fanhl.logview.LogViewUI;
 import com.fanhl.logview.R;
+import com.fanhl.logview.ui.presenter.LogContainerPresenter;
+import com.fanhl.logview.ui.presenter.TogglePresenter;
 
 /**
  * Created by fanhl on 16/5/5.
@@ -23,11 +20,8 @@ import com.fanhl.logview.R;
 public class LogFragment extends Fragment {
     public static final String TAG = LogFragment.class.getSimpleName();
 
-    private android.widget.ToggleButton            toggle;
-    private android.widget.Spinner                 typespinner;
-    private android.widget.EditText                editText;
-    private android.support.v7.widget.RecyclerView recyclerview;
-    private android.widget.LinearLayout            logcontainer;
+    private TogglePresenter       togglePresenter;
+    private LogContainerPresenter logContainerPresenter;
 
     public static Fragment newInstance() {
         return new LogFragment();
@@ -56,25 +50,16 @@ public class LogFragment extends Fragment {
     }
 
     private void assignViews(View view) {
-        this.toggle = (ToggleButton) view.findViewById(R.id.toggle);
-        toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        togglePresenter = new TogglePresenter(view, new CompoundButton.OnCheckedChangeListener() {
             @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    logcontainer.setVisibility(View.VISIBLE);
-                } else {
-                    logcontainer.setVisibility(View.GONE);
-                }
+                logContainerPresenter.setVisible(isChecked);
             }
         });
-        this.logcontainer = (LinearLayout) view.findViewById(R.id.log_container);
-        this.recyclerview = (RecyclerView) view.findViewById(R.id.recycler_view);
-        this.editText = (EditText) view.findViewById(R.id.editText);
-        this.typespinner = (Spinner) view.findViewById(R.id.type_spinner);
-
+        logContainerPresenter = new LogContainerPresenter(view);
     }
 
     private void initData() {
-
+        logContainerPresenter.initData();
     }
 
     private void refreshData() {
