@@ -66,13 +66,4 @@ public class LogFragment extends Fragment {
     public void notifyLogsChanged() {
         refreshData();
     }
-
-    public void notifyPinBottom() {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mLogContainerPresenter.notifyPinBottom();
-            }
-        });
-    }
 }
