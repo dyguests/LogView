@@ -1,6 +1,5 @@
 package com.fanhl.logview.ui.fragment;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -33,19 +32,17 @@ public class LogFragment extends Fragment {
         View view = inflater.inflate(R.layout.logview_fragment_log, container, false);
         assignViews(view);
         initData();
-        refreshData();
+//        refreshData();
         return view;
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    @Override public void onResume() {
+        super.onResume();
         LogViewUI.registerLogFragment(this);
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
+    @Override public void onPause() {
+        super.onPause();
         LogViewUI.unregisterLogFragment(this);
     }
 
@@ -63,6 +60,10 @@ public class LogFragment extends Fragment {
     }
 
     private void refreshData() {
+        logContainerPresenter.refreshData();
+    }
 
+    public void notifyLogsChanged() {
+        refreshData();
     }
 }

@@ -1,5 +1,7 @@
 package com.fanhl.logview.model;
 
+import com.fanhl.logview.util.DateUtil;
+
 /**
  * Created by fanhl on 16/5/4.
  */

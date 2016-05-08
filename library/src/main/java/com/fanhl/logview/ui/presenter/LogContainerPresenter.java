@@ -7,32 +7,40 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import com.fanhl.logview.R;
+import com.fanhl.logview.ui.adapter.LogAdapter;
 
 /**
  * Created by fanhl on 16/5/8.
  */
 public class LogContainerPresenter {
 
-    private Spinner      typespinner;
+    private LinearLayout logContainer;
+    private Spinner      typeSpinner;
     private EditText     editText;
-    private RecyclerView recyclerview;
-    private LinearLayout logcontainer;
+    private RecyclerView recyclerView;
+
+    private LogAdapter adapter;
 
     public LogContainerPresenter(View view) {
-        this.logcontainer = (LinearLayout) view.findViewById(R.id.log_container);
+        this.logContainer = (LinearLayout) view.findViewById(R.id.log_container);
 
-        this.typespinner = (Spinner) view.findViewById(R.id.type_spinner);
+        this.typeSpinner = (Spinner) view.findViewById(R.id.type_spinner);
         this.editText = (EditText) view.findViewById(R.id.editText);
 
-        this.recyclerview = (RecyclerView) view.findViewById(R.id.recycler_view);
+        this.recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
     }
 
     public void initData() {
-//recyclerview.setAdapter();
+        adapter = new LogAdapter(recyclerView.getContext(), recyclerView);
+        recyclerView.setAdapter(adapter);
     }
 
     public void setVisible(boolean visible) {
-        if (visible) logcontainer.setVisibility(View.VISIBLE);
-        else logcontainer.setVisibility(View.GONE);
+        if (visible) logContainer.setVisibility(View.VISIBLE);
+        else logContainer.setVisibility(View.GONE);
+    }
+
+    public void refreshData() {
+        adapter.notifyDataSetChanged();
     }
 }

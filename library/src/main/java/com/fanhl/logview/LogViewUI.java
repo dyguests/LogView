@@ -21,6 +21,16 @@ public class LogViewUI {
 
     static {
         activeLogFragments = new ArrayList<>();
+
+        LogCore.setCallback(new LogCore.Callback() {
+            @Override public void onFilteredLogsChanged() {
+                notifyLogsChanged();
+            }
+
+            @Override public void onLogFilterConditionChanged() {
+                notifyLogsChanged();
+            }
+        });
     }
 
     public static void bind(Activity activity) {
@@ -41,5 +51,15 @@ public class LogViewUI {
 
     public static void unregisterLogFragment(LogFragment logFragment) {
         activeLogFragments.remove(logFragment);
+    }
+
+    private static void notifyLogsChanged() {
+        for (final LogFragment logFragment : activeLogFragments) {
+            logFragment.getActivity().runOnUiThread(new Runnable() {
+                @Override public void run() {
+                    logFragment.notifyLogsChanged();
+                }
+            });
+        }
     }
 }

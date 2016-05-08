@@ -9,14 +9,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.fanhl.logview.LogCore;
-import com.fanhl.logview.LogViewCore;
 import com.fanhl.logview.R;
 import com.fanhl.logview.model.LogItem;
 import com.fanhl.logview.model.LogLevel;
 import com.fanhl.logview.ui.base.ClickableRecyclerViewAdapter;
 
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  * A adapter to show log.
@@ -50,7 +48,7 @@ public class LogAdapter extends ClickableRecyclerViewAdapter<LogAdapter.ViewHold
     }
 
 
-    public class ViewHolder extends ClickableViewHolder {
+    public class ViewHolder extends ClickableRecyclerViewAdapter.ClickableViewHolder {
 
         private final TextView mLog;
 
@@ -63,6 +61,7 @@ public class LogAdapter extends ClickableRecyclerViewAdapter<LogAdapter.ViewHold
 
         public void bind(LogItem data) {
             mLog.setText(data.getLog());
+
             if (data.getLevel() == LogLevel.V) {
                 mLog.setTextColor(getColor(R.color.logview_log_verbose));
             } else if (data.getLevel() == LogLevel.D) {
