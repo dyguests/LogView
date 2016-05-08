@@ -7,7 +7,10 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import com.fanhl.logview.R;
+import com.fanhl.logview.model.LogItem;
 import com.fanhl.logview.ui.adapter.LogAdapter;
+import com.fanhl.logview.ui.base.ClickableRecyclerViewAdapter;
+import com.fanhl.logview.util.SystemUtil;
 
 /**
  * Created by fanhl on 16/5/8.
@@ -33,6 +36,12 @@ public class LogContainerPresenter {
     public void initData() {
         adapter = new LogAdapter(recyclerView.getContext(), recyclerView);
         recyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener(new ClickableRecyclerViewAdapter.OnItemClickListener() {
+            @Override public void onItemClick(int position, ClickableRecyclerViewAdapter.ClickableViewHolder holder) {
+                LogItem data = ((LogAdapter.ViewHolder) holder).getData();
+                SystemUtil.copyToClipboard(recyclerView.getContext(), data.getLog());
+            }
+        });
     }
 
     public void setVisible(boolean visible) {

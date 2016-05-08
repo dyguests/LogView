@@ -5,21 +5,13 @@ A Log View in Android.to make Tester check log without Developer.
 <a href="./graphics/device-2016-05-08-213219.png"><img src="./graphics/device-2016-05-08-213219.png" width="40%"/></a>
 <a href="./graphics/device-2016-05-08-213232.png"><img src="./graphics/device-2016-05-08-213232.png" width="40%"/></a>
 
-# TODO
+# Instruction
 
-1.scroll bar.
+1.Click log item to copy log to clipboard.
 
-2.filter.
+2.Click Toggle Button(in the top) to show/hide `logContainer`.
 
-3.surfaceView or TextureView.
-
-4.pined bottom.
-
-5.change recyclerView to listView.
-
-6.list divider.
-
-7.custom logView(color,filter,etc.)
+3.Use `LogViewApi.setEnable(false);` to unable LogView.(set it in your BaseApplication)
 
 #Usage
 
@@ -60,6 +52,22 @@ public class Log {
    public *;
 }
 ```
+
+# TODO
+
+1.scroll bar.
+
+2.filter.
+
+3.surfaceView or TextureView.
+
+4.pined bottom.
+
+5.change recyclerView to listView.
+
+6.list divider.
+
+7.custom logView(color,filter,etc.)
 
 # License
 
