@@ -20,6 +20,10 @@ public class LogItem {
         this.message = message;
     }
 
+    public String getLog() {
+        return DateUtil.long2mmssSSS(time) + "|" + message;// FIXME: 16/5/1
+    }
+
     public LogLevel getLevel() {
         return level;
     }
