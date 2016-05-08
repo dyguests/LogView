@@ -4,7 +4,7 @@ package com.fanhl.logview.model;
  * Created by fanhl on 16/5/4.
  */
 public class LogItem {
-    private LogLevel logLevel;
+    private LogLevel level;
     private long     time;
     private String   tag;
     private String   message;
@@ -14,18 +14,18 @@ public class LogItem {
     }
 
     public LogItem(long time, LogLevel logLevel, String tag, String message) {
-        this.logLevel = logLevel;
+        this.level = logLevel;
         this.time = time;
         this.tag = tag;
         this.message = message;
     }
 
-    public LogLevel getLogLevel() {
-        return logLevel;
+    public LogLevel getLevel() {
+        return level;
     }
 
-    public void setLogLevel(LogLevel logLevel) {
-        this.logLevel = logLevel;
+    public void setLevel(LogLevel level) {
+        this.level = level;
     }
 
     public long getTime() {

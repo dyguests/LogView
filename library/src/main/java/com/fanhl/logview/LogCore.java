@@ -23,7 +23,7 @@ public class LogCore {
     private static final LinkedList<LogItem> fullLogs;
     private static final LinkedList<LogItem> filteredLogs;
     private static final LinkedList<LogItem> bufferFullLogs;
-    private static final LinkedList<LogItem> bufferFilterdLogs;
+    private static final LinkedList<LogItem> bufferFilteredLogs;
 
     private static final ListUtil.Filter<LogItem> logItemFilter;
 
@@ -37,11 +37,11 @@ public class LogCore {
         fullLogs = new LinkedList<LogItem>();// Collections.synchronizedList(new LinkedList<LogItem>());
         filteredLogs = new LinkedList<LogItem>();// Collections.synchronizedList(new LinkedList<LogItem>());
         bufferFullLogs = new LinkedList<LogItem>();//Collections.synchronizedList(new LinkedList<LogItem>());
-        bufferFilterdLogs = new LinkedList<LogItem>();//Collections.synchronizedList(new LinkedList<LogItem>());
+        bufferFilteredLogs = new LinkedList<LogItem>();//Collections.synchronizedList(new LinkedList<LogItem>());
 
         logItemFilter = new ListUtil.Filter<LogItem>() {
             @Override public boolean filter(LogItem logItem) {
-                return logFilterCondition == null || logItem.getLogLevel().getIndex() >= logFilterCondition.getLogLevel().getIndex();
+                return logFilterCondition == null || logItem.getLevel().getIndex() >= logFilterCondition.getLogLevel().getIndex();
             }
         };
 
@@ -68,11 +68,11 @@ public class LogCore {
             //add log from butter log
             fullLogs.addAll(bufferFullLogs);
 
-            ListUtil.filter(bufferFullLogs, bufferFilterdLogs, logItemFilter);
-            filteredLogs.addAll(bufferFilterdLogs);
+            ListUtil.filter(bufferFullLogs, bufferFilteredLogs, logItemFilter);
+            filteredLogs.addAll(bufferFilteredLogs);
 
             bufferFullLogs.clear();
-            bufferFilterdLogs.clear();
+            bufferFilteredLogs.clear();
 
             while (fullLogs.size() > LIMIT_LENGTH) fullLogs.poll();
             while (filteredLogs.size() > LIMIT_LENGTH) filteredLogs.poll();
@@ -98,6 +98,10 @@ public class LogCore {
         }
 
         if (callback != null) callback.onLogFilterConditionChanged();
+    }
+
+    public static LinkedList<LogItem> getFilteredLogs() {
+        return filteredLogs;
     }
 
     public interface Callback {
