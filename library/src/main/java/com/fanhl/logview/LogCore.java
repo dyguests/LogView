@@ -2,6 +2,7 @@ package com.fanhl.logview;
 
 import com.fanhl.logview.model.LogFilterCondition;
 import com.fanhl.logview.model.LogItem;
+import com.fanhl.logview.model.LogLevel;
 import com.fanhl.logview.util.ListUtil;
 import com.fanhl.logview.util.Stabilizer;
 import com.fanhl.logview.util.StringUtil;
@@ -26,9 +27,9 @@ public class LogCore {
 
     private static final ListUtil.Filter<LogItem> logItemFilter;
 
-    private static Callback callback;
-
     private static LogFilterCondition logFilterCondition;
+
+    private static Callback callback;
 
     static {
         stabilizer = new Stabilizer(STABILIZER_TIME);
@@ -43,6 +44,8 @@ public class LogCore {
                 return logFilterCondition == null || logItem.getLogLevel().getIndex() >= logFilterCondition.getLogLevel().getIndex();
             }
         };
+
+        logFilterCondition = new LogFilterCondition(LogLevel.D, "");
     }
 
     /**
@@ -78,8 +81,8 @@ public class LogCore {
         }
     }
 
-    public void setCallback(Callback callback) {
-        this.callback = callback;
+    public static void setCallback(Callback callback) {
+        LogCore.callback = callback;
     }
 
     public static void setLogFilterCondition(LogFilterCondition logFilterCondition) {
