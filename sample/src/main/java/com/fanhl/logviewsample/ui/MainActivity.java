@@ -3,7 +3,6 @@ package com.fanhl.logviewsample.ui;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 
 import com.fanhl.logviewsample.R;
 import com.fanhl.logviewsample.ui.base.BaseActivity;
@@ -11,9 +10,6 @@ import com.fanhl.logviewsample.util.Log;
 
 public class MainActivity extends BaseActivity {
     public static final String TAG = MainActivity.class.getSimpleName();
-    private android.widget.Button button1;
-    private android.widget.Button button2;
-    private android.widget.Button button3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,26 +24,41 @@ public class MainActivity extends BaseActivity {
 
     private void assignViews() {
         Log.w(TAG, "assignViews");
-        this.button1 = (Button) findViewById(R.id.button1);
-        this.button2 = (Button) findViewById(R.id.button2);
-        this.button3 = (Button) findViewById(R.id.button3);
 
-        button1.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.verbose).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.w(TAG, "button1 tapped!!!");
+                Log.v(TAG, "button verbose tapped!!!");
             }
         });
-        button2.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.debug).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e(TAG, "button2 tapped!!!");
+                Log.d(TAG, "button debug tapped!!!");
             }
         });
-        button3.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.info).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.a(TAG, "button3 tapped!!!");
+                Log.i(TAG, "button info tapped!!!");
+            }
+        });
+        findViewById(R.id.warning).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.w(TAG, "button warning tapped!!!");
+            }
+        });
+        findViewById(R.id.error).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e(TAG, "button error tapped!!!");
+            }
+        });
+        findViewById(R.id.assert_).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.a(TAG, "button assert tapped!!!");
             }
         });
     }

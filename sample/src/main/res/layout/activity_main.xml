@@ -12,20 +12,38 @@
     tools:context=".ui.MainActivity">
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/verbose"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="New Button 1"/>
+        android:text="add verbose log"/>
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/debug"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="New Button 2"/>
+        android:text="add debug log"/>
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="New Button 3"/>
+        android:text="add info log"/>
+
+    <Button
+        android:id="@+id/warning"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="add warning log"/>
+
+    <Button
+        android:id="@+id/error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="add error log"/>
+
+    <Button
+        android:id="@+id/assert_"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="add assert log"/>
 </LinearLayout>
