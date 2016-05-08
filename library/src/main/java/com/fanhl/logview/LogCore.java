@@ -69,7 +69,7 @@ public class LogCore extends Observable {
 
             bufferFullLogs.clear();
             bufferFilterdLogs.clear();
-            
+
             while (fullLogs.size() > LIMIT_LENGTH) fullLogs.poll();
             while (filteredLogs.size() > LIMIT_LENGTH) filteredLogs.poll();
         }
@@ -77,8 +77,7 @@ public class LogCore extends Observable {
 
     public static void setLogFilterCondition(LogFilterCondition logFilterCondition) {
         //if same
-        if (LogCore.logFilterCondition.getLogLevel() == logFilterCondition.getLogLevel() &&
-                StringUtil.equals(LogCore.logFilterCondition.getQuery(), logFilterCondition.getQuery())) {
+        if (LogCore.logFilterCondition != null && LogCore.logFilterCondition.getLogLevel() == logFilterCondition.getLogLevel() && StringUtil.equals(LogCore.logFilterCondition.getQuery(), logFilterCondition.getQuery())) {
             return;
         }
         LogCore.logFilterCondition = logFilterCondition;
