@@ -7,15 +7,13 @@ import android.widget.ToggleButton;
 import com.fanhl.logview.R;
 
 /**
- * A toggle button to show/hide log.
- * Created by fanhl on 16/5/1.
+ * Created by fanhl on 16/5/8.
  */
 public class TogglePresenter {
-
-    private final ToggleButton mToggle;
+    private ToggleButton toggle;
 
     public TogglePresenter(View view, CompoundButton.OnCheckedChangeListener onCheckedChangeListener) {
-        mToggle = ((ToggleButton) view.findViewById(R.id.log_toggle));
-        mToggle.setOnCheckedChangeListener(onCheckedChangeListener);
+        this.toggle = (ToggleButton) view.findViewById(R.id.toggle);
+        toggle.setOnCheckedChangeListener(onCheckedChangeListener);
     }
 }

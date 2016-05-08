@@ -1,115 +1,46 @@
 package com.fanhl.logview.ui.presenter;
 
-import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.ToggleButton;
 
-import com.fanhl.logview.LogViewCore;
 import com.fanhl.logview.R;
-import com.fanhl.logview.model.LogItem;
-import com.fanhl.logview.model.LogLevel;
 import com.fanhl.logview.ui.adapter.LogAdapter;
-import com.fanhl.logview.ui.base.ClickableRecyclerViewAdapter;
-import com.fanhl.logview.util.SystemUtil;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
- * Created by fanhl on 16/5/1.
+ * Created by fanhl on 16/5/8.
  */
 public class LogContainerPresenter {
-    public static final String TAG = LogContainerPresenter.class.getSimpleName();
 
-    private final Context mContext;
+    private LinearLayout logContainer;
+    private Spinner      typeSpinner;
+    private EditText     editText;
+    private RecyclerView recyclerView;
 
-    private final LinearLayout mContainer;
-    private final RecyclerView mRecyclerView;
-    private final Spinner      mTypeSpinner;
-    private final ToggleButton mPinToggle;
+    private LogAdapter adapter;
 
-    private LogAdapter           mLogAdapter;
-    private ArrayAdapter<String> mTypeAdapter;
+    public LogContainerPresenter(View view) {
+        this.logContainer = (LinearLayout) view.findViewById(R.id.log_container);
 
-    public LogContainerPresenter(Context context, View view) {
-        mContext = context;
+        this.typeSpinner = (Spinner) view.findViewById(R.id.type_spinner);
+        this.editText = (EditText) view.findViewById(R.id.editText);
 
-        mContainer = ((LinearLayout) view.findViewById(R.id.log_container));
-
-        mRecyclerView = ((RecyclerView) view.findViewById(R.id.recycler_view));
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
-
-        mTypeSpinner = ((Spinner) view.findViewById(R.id.type_spinner));
-        mPinToggle = ((ToggleButton) view.findViewById(R.id.pin_toggle));
+        this.recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
     }
 
     public void initData() {
-        mLogAdapter = new LogAdapter(mContext, mRecyclerView);
-        mRecyclerView.setAdapter(mLogAdapter);
-
-        mLogAdapter.setOnItemClickListener(new ClickableRecyclerViewAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position, ClickableRecyclerViewAdapter.ClickableViewHolder holder) {
-                //copy log to clipboard.
-                LogItem data = ((LogAdapter.ViewHolder) holder).getData();
-                if (data != null) SystemUtil.copyToClipboard(mContext, data.getLog());
-
-                // FIXME: 16/5/2 show detail.
-            }
-        });
-
-        mTypeAdapter = new ArrayAdapter<>(mContext,
-                android.R.layout.simple_spinner_dropdown_item,
-                new String[]{"V", "D", "I", "W", "E", "A"});
-
-        mTypeSpinner.setAdapter(mTypeAdapter);
-        mTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                LogViewCore.setLogLevel(LogLevel.values()[position]);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+        adapter = new LogAdapter(recyclerView.getContext(), recyclerView);
+        recyclerView.setAdapter(adapter);
     }
 
-    @Deprecated
+    public void setVisible(boolean visible) {
+        if (visible) logContainer.setVisibility(View.VISIBLE);
+        else logContainer.setVisibility(View.GONE);
+    }
+
     public void refreshData() {
-        List<LogItem> list = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            list.add(new LogItem(LogLevel.D, "TAG_MOCK", System.currentTimeMillis(), "aaaaaaaaaaaaaasdfasdfaaaaaaaaaaaaaaasdfasdfaaaaaaaaaaaaaaasdfasdfaaaaaaaaaaaaaaasdfasdfaaaaaaaaaaaaaaasdfasdfaaaaaaaaaaaaaaasdfasdfaaaaaaaaaaaaaaasdfasdfaaaaaaaaaaaaaaasdfasdfaaaaaaaaaaaaaaasdfasdfa"));
-        }
-        mLogAdapter.addItems(list);
-    }
-
-    public void show() {
-        mContainer.setVisibility(View.VISIBLE);
-    }
-
-    public void hide() {
-        mContainer.setVisibility(View.GONE);
-    }
-
-    public void notifyItemInserted(int positionStart) {
-        mLogAdapter.notifyItemInserted(positionStart);
-    }
-
-    public void notifyItemRangeRemoved(int positionStart, int itemCount) {
-        mLogAdapter.notifyItemRangeRemoved(positionStart, itemCount);
-    }
-
-    public void notifyPinBottom() {
-        if (mPinToggle.isChecked()) {
-            mRecyclerView.scrollToPosition(mLogAdapter.getItemCount() - 1);
-        }
+        adapter.notifyDataSetChanged();
     }
 }

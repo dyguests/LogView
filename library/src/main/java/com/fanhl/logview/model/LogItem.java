@@ -3,41 +3,58 @@ package com.fanhl.logview.model;
 import com.fanhl.logview.util.DateUtil;
 
 /**
- * Log bean.
- * <p/>
- * Created by fanhl on 16/5/1.
+ * Created by fanhl on 16/5/4.
  */
 public class LogItem {
-    private final LogLevel level;
-    private final String   tag;
-    private final long     date;
-    private final String   msg;
+    private LogLevel level;
+    private long     time;
+    private String   tag;
+    private String   message;
 
-    public LogItem(LogLevel level, String tag, long date, String msg) {
-        this.level = level;
+    public LogItem() {
+        this(System.currentTimeMillis(), LogLevel.V, null, null);
+    }
+
+    public LogItem(long time, LogLevel logLevel, String tag, String message) {
+        this.level = logLevel;
+        this.time = time;
         this.tag = tag;
-        this.date = date;
-        this.msg = msg;
+        this.message = message;
+    }
+
+    public String getLog() {
+        return DateUtil.long2mmssSSS(time) + "|" + message;// FIXME: 16/5/1
     }
 
     public LogLevel getLevel() {
         return level;
     }
 
+    public void setLevel(LogLevel level) {
+        this.level = level;
+    }
+
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
+    }
+
     public String getTag() {
         return tag;
     }
 
-    public long getDate() {
-        return date;
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 
-    public String getMsg() {
-        return msg;
+    public String getMessage() {
+        return message;
     }
 
-    public String getLog() {
-        return DateUtil.long2mmssSSS(date) + "|" + msg;// FIXME: 16/5/1
+    public void setMessage(String message) {
+        this.message = message;
     }
-
 }
