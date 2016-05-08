@@ -6,9 +6,9 @@
     android:layout_height="match_parent"
     android:background="#81ff0000">
 
-    <!--<fragment-->
-        <!--android:name="com.fanhl.logview.ui.fragment.LogFragment"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--tools:layout="@layout/logview_fragment_log"/>-->
+    <fragment
+        android:name="com.fanhl.logview.ui.fragment.LogFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout="@layout/logview_fragment_log"/>
 </RelativeLayout>

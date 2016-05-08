@@ -7,14 +7,13 @@ import com.fanhl.logview.util.Stabilizer;
 import com.fanhl.logview.util.StringUtil;
 
 import java.util.LinkedList;
-import java.util.Observable;
 
 /**
  * The core of log.Just logic.No relationship of ui.
  * <p/>
  * Created by fanhl on 16/5/3.
  */
-public class LogCore extends Observable {
+public class LogCore {
     private static final int STABILIZER_TIME = 100;
     private static final int LIMIT_LENGTH    = 100;
 
@@ -26,6 +25,8 @@ public class LogCore extends Observable {
     private static final LinkedList<LogItem> bufferFilterdLogs;
 
     private static final ListUtil.Filter<LogItem> logItemFilter;
+
+    private static Callback callback;
 
     private static LogFilterCondition logFilterCondition;
 
@@ -72,7 +73,13 @@ public class LogCore extends Observable {
 
             while (fullLogs.size() > LIMIT_LENGTH) fullLogs.poll();
             while (filteredLogs.size() > LIMIT_LENGTH) filteredLogs.poll();
+
+            if (callback != null) callback.onFilteredLogsChanged();
         }
+    }
+
+    public void setCallback(Callback callback) {
+        this.callback = callback;
     }
 
     public static void setLogFilterCondition(LogFilterCondition logFilterCondition) {
@@ -81,13 +88,18 @@ public class LogCore extends Observable {
             return;
         }
         LogCore.logFilterCondition = logFilterCondition;
-        onLogFilterConditionChanged();
-    }
 
-    public static void onLogFilterConditionChanged() {
         synchronized (LogCore.class) {
             filteredLogs.clear();
             ListUtil.filter(fullLogs, filteredLogs, logItemFilter);
         }
+
+        if (callback != null) callback.onLogFilterConditionChanged();
+    }
+
+    public interface Callback {
+        void onFilteredLogsChanged();
+
+        void onLogFilterConditionChanged();
     }
 }
