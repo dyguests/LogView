@@ -1,9 +1,8 @@
 package com.fanhl.logview;
 
 import android.app.Activity;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.WindowManager;
+import android.widget.RelativeLayout;
 
 import com.fanhl.logview.ui.fragment.LogFragment;
 
@@ -25,8 +24,15 @@ public class LogViewUI {
     }
 
     public static void bind(Activity activity) {
-        View view = LayoutInflater.from(activity).inflate(R.layout.logview_container, null);
-        activity.getWindow().addContentView(view, new WindowManager.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT));
+        RelativeLayout logContainer = new RelativeLayout(activity);
+        logContainer.setId(2012345);
+
+        activity.getWindow().addContentView(logContainer, new WindowManager.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT));
+
+        activity.getFragmentManager()
+                .beginTransaction()
+                .add(logContainer.getId(), LogFragment.newInstance(), LogFragment.TAG)
+                .commit();
     }
 
     public static void registerLogFragment(LogFragment logFragment) {

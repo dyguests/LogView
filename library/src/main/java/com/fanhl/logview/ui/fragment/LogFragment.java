@@ -15,6 +15,12 @@ import com.fanhl.logview.R;
  * Created by fanhl on 16/5/5.
  */
 public class LogFragment extends Fragment {
+    public static final String TAG = LogFragment.class.getSimpleName();
+
+    public static Fragment newInstance() {
+        return new LogFragment();
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
