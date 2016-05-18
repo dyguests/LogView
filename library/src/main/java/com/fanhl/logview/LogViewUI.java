@@ -35,7 +35,8 @@ public class LogViewUI {
 
     public static void bind(Activity activity) {
         RelativeLayout logContainer = new RelativeLayout(activity);
-        logContainer.setId(2012345);
+//        logContainer.setId(2012345);
+        logContainer.setId(R.id.log_container);
 
         activity.getWindow().addContentView(logContainer, new WindowManager.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT));
 
