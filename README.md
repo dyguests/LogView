@@ -2,6 +2,8 @@
 
 A Log View in Android.to make Tester check log without Developer.
 
+[![](https://jitpack.io/v/dyguests/LogView.svg)](https://jitpack.io/#dyguests/LogView)
+
 <a href="./graphics/device-2016-05-08-213219.png"><img src="./graphics/device-2016-05-08-213219.png" width="40%"/></a>
 <a href="./graphics/device-2016-05-08-213232.png"><img src="./graphics/device-2016-05-08-213232.png" width="40%"/></a>
 
@@ -24,7 +26,7 @@ Add it in your root build.gradle at the end of repositories:
 ## Step 2. Add the dependency
 
 	dependencies {
-	        compile 'com.github.dyguests:LogView:-SNAPSHOT'
+	        compile 'com.github.dyguests:LogView:v0.1.2'
 	}
 
 
