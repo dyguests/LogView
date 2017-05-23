@@ -36,9 +36,9 @@ Add it in your root build.gradle at the end of repositories:
 
 3.Use `LogViewApi.setEnable(false);` to unable LogView.(set it in your BaseApplication)
 
-#Usage
+# Usage
 
-1.Bind in Activity.
+## 1.Bind in Activity.
 
 **use `bind()`method after `setContentView()`**.
 
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 }
 ```
 
-2.Use custom `Log` with LogViewApi.
+## 2.Use custom `Log` with LogViewApi.
 
 ```java
 public class Log {
@@ -66,7 +66,7 @@ public class Log {
 }
 ```
 
-3.Have fun.
+## 3.Have fun.
 
 # Proguard
 
