@@ -5,6 +5,29 @@ A Log View in Android.to make Tester check log without Developer.
 <a href="./graphics/device-2016-05-08-213219.png"><img src="./graphics/device-2016-05-08-213219.png" width="40%"/></a>
 <a href="./graphics/device-2016-05-08-213232.png"><img src="./graphics/device-2016-05-08-213232.png" width="40%"/></a>
 
+# Dependency
+
+## Step 1. Add the JitPack repository to your build file
+
+gradle
+maven
+sbt
+leiningen
+Add it in your root build.gradle at the end of repositories:
+
+	allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}Copy
+## Step 2. Add the dependency
+
+	dependencies {
+	        compile 'com.github.dyguests:LogView:-SNAPSHOT'
+	}
+
+
 # Instruction
 
 1.Click log item to copy log to clipboard.
